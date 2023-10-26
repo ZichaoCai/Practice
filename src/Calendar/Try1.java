@@ -19,6 +19,8 @@ import java.io.InputStreamReader;
 
 public class Try1 {
 	
+	static int[][] holidayTxt = readTxtFile("C:/Users/User/Downloads/feiertage.txt");
+	
 	public static void main(String[] args) {
 		/*Scanner sc = new Scanner(System.in);
 		System.out.println("Month & Year: ");
@@ -41,19 +43,14 @@ public class Try1 {
 			e.printStackTrace();
 		}
 		*/
-		String[] holidayTxt = readTxtFile("C:/Users/User/Downloads/feiertage.txt");
-		
-		
-		String dateTest = "01,01,2342";
-		System.out.println(Arrays.toString(dateTxtToInts(dateTest)));
+
+		//System.out.println(Arrays.deepToString(holidayTxt));
 		
 		System.out.println("Mon\tTue\tWed\tThu\tFri\tSat\tSun");
-		show(1, 2023);
-		show(2, 2023);
-		
+		show(12, 2023);
 	}
 	
-	public static String[] readTxtFile(String filePath) {
+	public static int[][] readTxtFile(String filePath) {
 		try {
 			String encoding = "UTF-8";
 			File file = new File(filePath);
@@ -67,9 +64,14 @@ public class Try1 {
 						list.add(lineTxt);
 					}
 				}
-				System.out.println(list.size());
 				read.close();
-				return list.toArray(new String[list.size()]);
+				String[] txtFile = list.toArray(new String[list.size()]);
+				int[][] intDoubleArray = new int[list.size()][3];
+				for (int i = 0; i< list.size(); i ++)
+				{
+					intDoubleArray[i] = dateTxtToInts(txtFile[i]);
+				}
+				return intDoubleArray;
 			}
 			else {
 				System.out.println("Can not find the file.");
@@ -78,7 +80,7 @@ public class Try1 {
 			System.out.println("Error.");
 			e.printStackTrace();
 		}
-		return new String[] { "" };
+		return new int[][] {  };
 	}
 	
 	public static int[] dateTxtToInts(String s){
@@ -111,8 +113,6 @@ public class Try1 {
 		//int month = c.get(Calendar.MONTH) + 1;
 		//int day = c.get(Calendar.DAY_OF_MONTH);
 		
-		int[][] holiday = {{1, 1, 2023},{3,1,2023},{24,02,2023}};
-		
 		c.set(Calendar.YEAR, y);
 		//Calendar.MONTH starts from 0
 		c.set(Calendar.MONTH, m - 1);
@@ -130,7 +130,7 @@ public class Try1 {
 			count++;
 			//to avoid blank at the beginning of the month if more than one month is shown, 
 			//for the start of the year, it shows the blank
-			if( m == 1) 
+			//if( m == 1) 
 				System.out.print("\t");
 		}
 			
@@ -140,7 +140,7 @@ public class Try1 {
 			//print all the calendar data
 			String dateToPrint = i + "\t";
 			//pick out the given dates (holidays)
-			for (int[] j:holiday){
+			for (int[] j:holidayTxt){
 				if (Arrays.equals(date, j))
 				dateToPrint = i + "*" + "\t";
 			}
