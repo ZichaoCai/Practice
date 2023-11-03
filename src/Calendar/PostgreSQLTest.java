@@ -50,11 +50,11 @@ public class PostgreSQLTest {
 			stmt.executeUpdate(sql);
 			*/
 			
-			//Delete data
+			/*Delete data
 	        String sql = "DELETE from CALENDARBASE where ID=2;";
 	        stmt.executeUpdate(sql);
 			
-			c.commit();//for any change of the database (e.g. insert/update/delete data)
+			c.commit();*///for any change of the database (e.g. insert/update/delete data)
 			
 			//Select and read data from database
 			ResultSet rs = stmt.executeQuery("SELECT * FROM CALENDARBASE;");
