@@ -5,11 +5,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.io.FileNotFoundException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -20,6 +18,10 @@ import java.io.InputStreamReader;
 public class Try1 {
 	
 	static int[][] holidayTxt = readTxtFile("C:/Users/User/Downloads/feiertage.txt");
+	
+	static String[][][] calendarData; 
+	//the size of this array String[year][month][day], the *year should be max-min of the given years? the *month should be 12? 
+	//and the *day should be 31?
 	
 	public static void main(String[] args) {
 		/*Scanner sc = new Scanner(System.in);
@@ -91,22 +93,6 @@ public class Try1 {
 		 return n;
 	}
 	
-	/*simple txt to String method
-	public static String txt2String(File file){
-		StringBuilder result = new StringBuilder();
-		try{
-			BufferedReader br = new BufferedReader(new FileReader(file));//create a bufferReader to read the data
-			String s = null;
-			while((s = br.readLine())!=null){//readLine(), read per line
-				result.append(System.lineSeparator()+s);
-			}
-			br.close();    
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return result.toString();
-	}*/
-	
 	public static void show(int m, int y) {
 		Calendar c = Calendar.getInstance();	
 		//int year = c.get(Calendar.YEAR);
@@ -120,16 +106,14 @@ public class Try1 {
 		
 		int dayOfMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 		//Calendar.DAY_OF_WEEK starts from Sunday
-		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
 		
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
 		dayOfWeek = dayOfWeek == 0 ? 7 : dayOfWeek;
 		int space = dayOfWeek - 1;
-		int count = 0;
-		
+		int count = 0;  //to count the position until 7, to change the line
 		for (int i= 0; i<space;i++) {
 			count++;
-			//to avoid blank at the beginning of the month if more than one month is shown, 
-			//for the start of the year, it shows the blank
+			//to avoid blank at the beginning of the month if more than one month is shown, default set as 1 (Jar)
 			//if( m == 1) 
 				System.out.print("\t");
 		}
@@ -139,19 +123,23 @@ public class Try1 {
 			count++;
 			//print all the calendar data
 			String dateToPrint = i + "\t";
+			
+			//calendarData[y][m][i] = String.valueOf(i);
+			
 			//pick out the given dates (holidays)
 			for (int[] j:holidayTxt){
 				if (Arrays.equals(date, j))
 				dateToPrint = i + "*" + "\t";
+				
+				//calendarData[y][m][i] = i + "*";
+				
 			}
 
 			System.out.print(dateToPrint);
 
 			if (count % 7 == 0) {
 				count = 0;
-				System.out.println();
-			}
-			//System.out.println(Arrays.toString(date)); test if date shows correctly.
+				System.out.println();}
 		}		
 	}
 	
