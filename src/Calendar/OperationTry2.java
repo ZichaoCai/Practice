@@ -9,18 +9,17 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import Calendar.IDReader;
 
 public class OperationTry2 {
 	public static void main(String args[]) {
 		
 		String user = "Lina Reich";
-		
-		int vacationPerYear = 30;
-		int[] vacationIDs = new int[vacationPerYear];
+		int[] vacationIDs = IDReader.readIDs();
 
-		String chosenDateStart = "2023-12-24";
-		String chosenDateEnd = "2023-12-25";
+		
+		String chosenDateStart = "2023-12-28";
+		String chosenDateEnd = "2023-12-28";
 		
 		Date dateStart =Date.valueOf(chosenDateStart);
 		Date dateEnd =Date.valueOf(chosenDateEnd);
@@ -52,11 +51,14 @@ public class OperationTry2 {
 					if (vacationIDs[i] == 0) {
 						vacationIDs[i] = tmpID;
 						break;}
-				}	
+					else {
+						//index out of range
+					}
+				}
 			}
-			//VacationMethod.updateVacation(c, user, 2, dateStart, dateEnd);
+			//VacationMethod.updateVacation(c, user, vacationIDs[1], dateStart, dateEnd);
 			//VacationMethod.deleteVacation(c, user, 2);
-			//VacationMethod.showDaysAmount(c, user, chosenYear);
+			VacationMethod.showDaysAmount(c, user, chosenYear);
 
 			c.commit();
 			c.close();
@@ -69,8 +71,8 @@ public class OperationTry2 {
 			System.exit(0);
 		}
 		
-		System.out.println(Arrays.toString(vacationIDs));
-		
+		IDReader.writeIDs(vacationIDs);
+		System.out.println(Arrays.toString(IDReader.readIDs()));
 	}
 	
 	
@@ -98,14 +100,13 @@ public class OperationTry2 {
 				ps.setDate(6, chosenDateStart);
 				ps.setDate(7, chosenDateEnd);
 				int i = ps.executeUpdate();
+				System.out.println("If data is written: "+ i);
 				try (ResultSet rs = ps.getGeneratedKeys()){
 					if (rs.next()) {
 						int id = rs.getInt(1);
 						return id;
 					}
 				}
-				
-				System.out.println("If data is written: "+ i);
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -177,7 +178,8 @@ public class OperationTry2 {
 				e.printStackTrace();
 			}
 		}
-		
 
 	}
 }
+
+
