@@ -2,7 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Practice</groupId>
   <artifactId>Practice</artifactId>
+  <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
+  
+  <properties>
+	  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -14,5 +21,15 @@
         </configuration>
       </plugin>
     </plugins>
+    <finalName>webTest</finalName>
   </build>
+  
+  <dependencies>
+	  <dependency>
+		  <groupId>jakarta.servlet</groupId>
+		  <artifactId>jakarta.servlet-api</artifactId>
+		  <version>5.0.0</version>
+		  <scope>provided</scope>
+	  </dependency>
+  </dependencies>
 </project>
